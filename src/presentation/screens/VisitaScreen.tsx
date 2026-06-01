@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router";
 import {
+  CalendarClock,
   Car,
   CircleQuestionMark,
   Laptop,
@@ -7,6 +8,7 @@ import {
   Smartphone,
   Tablet,
   User,
+  UsersIcon,
 } from "lucide-react";
 import type {
   ApiError,
@@ -112,23 +114,27 @@ const VisitaScreen = () => {
         </div>
 
         {/* INFO GENERAL */}
-        <div className="rounded-2xl bg-white p-6 shadow-sm">
-          <div className="flex  gap-4 flex-row justify-between items-center">
+        <div className="rounded-2xl bg-white p-6 shadow-sm flex justify-between items-center">
+          <div className="flex  gap-6 flex-row  items-center">
             <div>
-              <p className="text-sm text-slate-500">Fecha y hora de ingreso</p>
+              <CalendarClock size={60} className="text-blue-700" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm uppercase text-slate-500">
+                Fecha y hora de ingreso
+              </p>
 
-              <h2 className="mt-1 text-xl font-semibold">
+              <h2 className="text-xl font-semibold">
                 {visita.fechaIngreso.split(" ")[0] ?? "SIN FECHA"}
               </h2>
 
               <p>{visita.fechaIngreso.split(" ")[1] ?? "SIN HORA"}</p>
             </div>
-
-            <div className="md:text-right">
-              <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
-                {visita.estado}
-              </span>
-            </div>
+          </div>
+          <div className="md:text-right">
+            <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
+              {visita.estado}
+            </span>
           </div>
         </div>
 
@@ -153,9 +159,12 @@ const VisitaScreen = () => {
         {/* PERSONAS QUE INGRESARON */}
 
         <div className="rounded-2xl bg-white p-6 shadow-sm">
-          <h2 className="mb-5 text-lg font-semibold">
-            Personas que ingresaron ({visita.personas.length})
-          </h2>
+          <div className="flex flex-row gap-2 items-center mb-5">
+            <UsersIcon size={20} className="text-blue-700" />
+            <h2 className=" text-lg font-semibold">
+              Personas que ingresaron ({visita.personas.length})
+            </h2>
+          </div>
 
           <div className="space-y-4">
             {visita.personas.map((persona, index) => (
@@ -214,41 +223,53 @@ const VisitaScreen = () => {
 
         {/* VEHICULOS */}
         {visita.vehiculos.length > 0 && (
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <h2 className="mb-5 text-lg font-semibold">
-              Vehículos ({visita.vehiculos.length})
-            </h2>
+          <div className="rounded-2xl bg-white p-6 shadow-sm mb-5">
+            <div className="flex flex-row gap-2 items-center mb-5">
+              <Car size={20} className="text-violet-600" />
+              <h2 className=" text-lg font-semibold">
+                Vehículos ({visita.vehiculos.length})
+              </h2>
+            </div>
 
             <div className="space-y-4">
               {visita.vehiculos.map((vehiculo, index) => (
                 <div
                   key={index}
-                  className="rounded-xl border border-slate-200 p-5"
+                  className="flex flex-row items-center rounded-xl border border-slate-200 p-5 gap-5"
                 >
                   <div className="mb-4 flex items-center gap-3">
                     <div className="rounded-lg bg-violet-100 p-2 text-violet-600">
-                      <Car size={20} />
+                      <Car size={50} />
                     </div>
 
-                    <span className="font-semibold">{vehiculo.tipo}</span>
+                    {/* <span className="font-semibold">{vehiculo.tipo}</span> */}
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                  <div className="grid gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                     <div>
-                      <p className="text-sm text-slate-500">Placa 1</p>
+                      <p className="text-sm uppercase text-slate-500">tipo</p>
+
+                      <p>{vehiculo.tipo}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm uppercase text-slate-500">
+                        Placa 1
+                      </p>
 
                       <p>{vehiculo.placa1}</p>
                     </div>
                     {vehiculo.placa2 && (
                       <div>
-                        <p className="text-sm text-slate-500">Placa 2</p>
+                        <p className="text-sm uppercase text-slate-500">
+                          Placa 2
+                        </p>
 
                         <p>{vehiculo.placa2}</p>
                       </div>
                     )}
 
                     <div>
-                      <p className="text-sm text-slate-500">Marca / Modelo</p>
+                      <p className="text-sm uppercase text-slate-500">Modelo</p>
 
                       <p>{vehiculo.marcaModelo}</p>
                     </div>
